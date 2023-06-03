@@ -1,0 +1,39 @@
+<h2 class="page-header">Questions</h2>
+<form action="/questions" method="GET">
+  <div class="form-row">
+    <div class="form-item">
+      <label>Search questions</label> <!--Here we have the searchBar, where user can search for questions based on the "question" text.-->
+      <input type="text" name="question" value="<%= searchOptions.question %>">
+    </div>
+    <div class="form-item">
+      <label>Subject</label> <!--Here we have a "filter" system, which allows user to list questions based on subject (for example selecting subject type math will filter all questions with the subject of math. They can also combine this with the question search, to more accurately find the question they are looking for).-->
+      <select name="subject">
+        <option value="">All Subjects</option> <!--This is the default option, which will list all questions-->
+        <% subjects.forEach(subject => { %>
+          <option value="<%= subject._id %>" <% if (searchOptions.subject && searchOptions.subject === subject._id.toString()) { %>selected<% } %>><%= subject.type %></option>
+        <% }) %>
+      </select>
+    </div>
+  </div>
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
+</form>
+
+<% subjects.forEach(subject => { %>
+  <% const subjectQuestions = questions.filter(question => question.subject && question.subject._id && question.subject._id.equals(subject._id)); %> <!--If a question has a subject, with a valid id and matches the current subject, the question will be included in the subjectQuestions array, which will later be used to show all questions inside it on the page.-->
+  <% if (subjectQuestions.length > 0) { %> <!--If subject has any questions, it will display the subject type, and the questions related to it-->
+    <h3><%= subject.type %></h3>
+    <% subjectQuestions.forEach(question => { %>
+      <div class="exam-row">
+        <div class="exam-name"><%= question.question %></div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/questions/<%= question.id %>">View</a>
+          <a class="btn btn-primary" href="/questions/<%= question.id %>/edit">Edit</a>
+          <%- include('../partials/deleteForm', { url: `/questions/${question.id}` }) %>
+        </div>
+      </div>
+    <% }) %>
+  <% } %>
+<% }) %>
+

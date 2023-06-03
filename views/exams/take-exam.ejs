@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Take Exam</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1><%= exam.name %></h1> 
+
+  <form id="examForm" action="/exams/<%= exam.id %>/submit" method="POST">
+    <% let totalPoints = 0; %>
+    <% exam.questions.forEach((question, index) => { %>
+      <h3>Question <%= index + 1 %></h3>  <!--This basically puts Question + number before each question (Question 1 Question 2 etc.)-->
+      <p><%= question.question %></p> 
+      <!--Inside the questions loop, we have another loop that will iterates over the options, displaying them as radio buttons.-->
+      <% question.options.forEach((option, optionIndex) => { %>
+        <label>
+          <input type="radio" name="answer<%= index %>" value="<%= optionIndex %>" required>
+          <%= option %>
+        </label>
+        <br>
+      <% }) %>
+
+      <hr> <!--This is simply a horizontal line, which will be added between each question.-->
+    <% }) %>
+
+    <input type="hidden" name="points" value="<%= totalPoints %>"> 
+   <button id="submitBtn" class="btn btn-primary" type="button">Submit Exam</button>
+
+  </form>
+
+  <script>
+    $(document).ready(function() {
+      $('#submitBtn').click(function(e) { //This function will run after user clicks Submit Exam button.
+        e.preventDefault(); //This will prevent the default form submission
+  
+        const examData = JSON.parse($('#examData').attr('data-exam')); //Here the exam data is retrieved from the data-exam attribute of the examData element. The exam data is parsed from JSON to an object.
+        let totalPoints = 0;
+  
+        //Here the total points is calculated by comparing selected options with the correct answers
+        examData.questions.forEach((question, index) => {
+  const selectedAnswer = $(`input[name="answer${index}"]:checked`);
+  const selectedOptionIndex = question.options.findIndex((option) => option === selectedAnswer.val());
+  console.log(`Question ${index + 1}: selected option index: ${selectedOptionIndex}, correct answer index: ${question.answerIndex}`);
+  if (selectedOptionIndex !== -1 && selectedOptionIndex === question.answerIndex) {
+    totalPoints += 1;
+  }
+});
+
+        //Setting the calculated total points value to the hidden input field
+        $('input[name="points"]').val(totalPoints);
+  
+        //Submit the form
+        $('#examForm').submit();
+      });
+    });
+  </script>
+  
+<!--Here is a hidden input field with the ID examData. The data-exam attribute converts the exam object to a JSON string and assigns it as the value of the attribute. This allows the JavaScript code to retrieve the exam data for calculations.-->
+  <input type="hidden" id="examData" data-exam="<%= JSON.stringify(exam) %>"> 
+  
+</body>
+</html>

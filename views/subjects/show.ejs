@@ -1,0 +1,8 @@
+<h2 class="page-header"><%= subject.type %></h2>
+<div class="btn-row">
+  <a class="btn btn-primary" href="/subjects/<%= subject.id %>/edit">Edit</a>
+  <%- include('../partials/deleteForm',
+              { url: `/subjects/${subject.id}` }) %>
+</div>
+<br><br>
+<a class="btn btn-primary" href="/subjects">Back to Subjects</a>

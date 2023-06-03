@@ -1,0 +1,11 @@
+<h2 class="page-header"><%= question.question %></h2>
+<h3 class="">The subject: <%= question.subject.type %></h3>
+<h3 class="">The options: <%= question.options %></h3>
+<h3 class="">The answer: Option number <%= question.answerIndex %></h3>
+<div class="btn-row">
+  <a class="btn btn-primary" href="/questions/<%= question.id %>/edit">Edit</a>
+  <%- include('../partials/deleteForm',
+              { url: `/questions/${question.id}` }) %>
+</div>
+<br><br>
+<a class="btn btn-primary" href="/questions">Back to Questions</a>

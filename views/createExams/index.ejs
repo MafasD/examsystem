@@ -1,0 +1,42 @@
+<!-- This is the createExam page view, questions are listed in a table, with a checkbox next to each question. The user selects all questions they want to add and then create the exam with selected questions.  -->
+<h2 class="page-header">New Exam</h2>
+<form method="POST">
+  <div class="form-item">
+    <label for="name">Exam Name:</label>
+    <input type="text" name="name" id="name" required>
+  </div>
+  <br>
+  <label for="questions">Select the questions:</label>
+  <div class="question-list-container">
+    <table class="question-list">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const question of questions) { %>
+          <tr>
+            <td>
+              <input type="checkbox" name="questions" id="question-<%= question.id %>" value="<%= question.id %>">
+            </td>
+            <td>
+              <label for="question-<%= question.id %>"><%= question.question %></label>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <button class="btn btn-primary" type="submit">Create Exam</button>
+</form>
+
+<style>
+  .question-list-container {
+    max-height: 200px; /* Max height before the table becomes scrollable */
+    overflow-y: auto; /* This enables vertical scrolling */
+  }
+</style>
+

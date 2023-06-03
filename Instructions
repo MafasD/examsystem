@@ -1,0 +1,7 @@
+Node_modules is included, so no are installations needed.
+.env file should be changed to whatever database name you want to use for this app.
+To run the app: Open examsystem folder in command prompt and type: npm run start
+    then go to this address on your browser: http://localhost:3000/
+Login system is pretty simple, just register with whatever details, then login.
+Currently, login system is only required for submitting exams.
+The submit is only really simple, it will just display the points you got on the exam, and then add the points to the database. But in the database it will basically show total points of all exams submitted together, and currently there is no real way to see these points on the website, nor to reset them.

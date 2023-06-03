@@ -1,0 +1,14 @@
+<h2 class="page-header">Exam: <%= exam.name %></h2>
+<h3>Exam questions:</h3>
+  <ul>
+  <% exam.questions.forEach(question => { %>
+      <li><%= question.question %></li>
+  <% }) %>
+</ul>
+<div class="btn-row">
+  <a class="btn btn-primary" href="/exams/<%= exam.id %>/edit">Edit</a>
+  <%- include('../partials/deleteForm',
+              { url: `/exams/${exam.id}` }) %>
+</div>
+<br><br>
+<a class="btn btn-primary" href="/exams">Back to Exams</a>

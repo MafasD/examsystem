@@ -1,0 +1,26 @@
+<h2 class="page-header">Exams</h2>
+<form action="/exams" method="GET">
+  <div class="form-row">
+    <div class="form-item">
+            <label>Search exams</label>
+      <input type="text" name="name" value="<%= searchOptions.name %>">
+    </div>
+  </div>
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
+</form>
+<br>
+<!--Exams are listed here, with view, edit, take exam and delete buttons next to each exam-->
+<% exams.forEach(exam => { %>
+  <div class="exam-row">
+    <div class="exam-name"><%= exam.name %></div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/exams/<%= exam.id %>">View</a>
+      <a class="btn btn-primary" href="/exams/<%= exam.id %>/edit">Edit</a>
+      <a class="btn btn-primary" href="/exams/<%= exam.id %>/take">Take Exam</a>
+      <%- include('../partials/deleteForm',
+                  { url: `/exams/${exam.id}` }) %>
+    </div>
+  </div>
+<% }) %>

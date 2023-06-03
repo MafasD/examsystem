@@ -1,0 +1,24 @@
+<h2 class="page-header">Subjects</h2>
+<form action="/subjects" method="GET">
+  <div class="form-row">
+    <div class="form-item">
+      <label>Search subjects</label>
+      <input type="text" name="type" value="<%= searchOptions.type %>">
+    </div>
+  </div>
+  <div class="form-row form-row-end">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
+</form>
+<br>
+<% subjects.forEach(subject => { %>
+  <div class="exam-row">
+    <div class="exam-name"><%= subject.type %></div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/subjects/<%= subject.id %>">View</a>
+      <a class="btn btn-primary" href="/subjects/<%= subject.id %>/edit">Edit</a>
+      <%- include('../partials/deleteForm',
+                  { url: `/subjects/${subject.id}` }) %>
+    </div>
+  </div>
+<% }) %>
